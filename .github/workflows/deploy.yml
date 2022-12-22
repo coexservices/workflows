@@ -27,8 +27,6 @@ on:
       docker_password:
         required: false
 
-run-name: Deploy to ${{ github.event.inputs.env }} release ${{ github.event.inputs.ver }}
-
 jobs:
 
   project-step-calculator:
