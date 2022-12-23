@@ -29,7 +29,14 @@ jobs:
           checkAllCommitMessages: ${{ inputs.check_all_commit_msg }}
           accessToken: ${{ github.token }} # github access token is only required if checkAllCommitMessages is true
 
+      - name: Check pre-commit config
+        id: pre_commit_config
+        uses: andstor/file-existence-action@v2
+        with:
+          files: ".pre-commit-config.yaml"
+
       - name: Check commit messages
+        if: steps.pre_commit_config.outputs.files_exists == 'true'
         uses: cloudposse/github-action-pre-commit@v2.1.2  # run pre-commit
 
   validate-k8s-configuration:
