@@ -149,13 +149,4 @@ jobs:
           terraform validate
           cd ../..
 
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Project Step Calculator
-        run: |
-          echo "HAS_GRADLE=$( [ -f build.gradle ] && echo true || echo false )" >> $GITHUB_ENV
-          echo "HAS_MAVEN=$( [ -f pom.xml ] && echo true || echo false )" >> $GITHUB_ENV
 
