@@ -51,4 +51,4 @@ jobs:
         if: always() # always run even if the previous step fails
         with:
           report_paths: '**/target/surefire-reports/TEST-*.xml'
-          job_name: validate-pr
+          commit: ${{ github.sha }}
