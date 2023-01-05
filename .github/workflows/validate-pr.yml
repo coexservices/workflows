@@ -22,7 +22,6 @@ on:
         required: false
         type: string
         default: '17'
-  workflow_dispatch:
 
 jobs:
   validate-commit-msg:
