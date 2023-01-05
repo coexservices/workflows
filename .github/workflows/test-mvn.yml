@@ -51,3 +51,4 @@ jobs:
         if: always() # always run even if the previous step fails
         with:
           report_paths: '**/target/surefire-reports/TEST-*.xml'
+          update_check: true
