@@ -19,19 +19,19 @@ jobs:
           docker login ${{ inputs.docker_namespace }} -u ${{ secrets.ORACLE_CONTAINER_REGISTRY_DOCKER_USERNAME }} -p "${{ secrets.ORACLE_CONTAINER_REGISTRY_DOCKER_PASSWORD }}"
 
       - name: "check sit k8s helm charts"
-        uses: ./.github/actions/validate-k8-helm-chart.yml
+        uses: coexservices/workflows/.github/actions/validate-k8-helm-chart.yml
         with:
           docker_namespace: ${{inputs.docker_namespace}}
           env: sit
 
       - name: "check uat k8s helm charts"
-        uses: ./.github/actions/validate-k8-helm-chart.yml
+        uses: coexservices/workflows/.github/actions/validate-k8-helm-chart.yml
         with:
           docker_namespace: ${{inputs.docker_namespace}}
           env: uat
 
       - name: "check prod k8s helm charts"
-        uses: ./.github/actions/validate-k8-helm-chart.yml
+        uses: coexservices/workflows/.github/actions/validate-k8-helm-chart.yml
         with:
           docker_namespace: ${{inputs.docker_namespace}}
           env: prod
