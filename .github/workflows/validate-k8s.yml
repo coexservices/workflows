@@ -19,19 +19,25 @@ jobs:
           docker login ${{ inputs.docker_namespace }} -u ${{ secrets.ORACLE_CONTAINER_REGISTRY_DOCKER_USERNAME }} -p "${{ secrets.ORACLE_CONTAINER_REGISTRY_DOCKER_PASSWORD }}"
 
       - name: "check sit k8s helm charts"
-        uses: coexservices/workflows/.github/actions/validate-k8-helm-chart.yml
-        with:
-          docker_namespace: ${{inputs.docker_namespace}}
-          env: sit
+        run: |
+          docker run --rm \
+            -v "$(pwd):/apps" \
+            -w /apps \
+            ${{inputs.docker_namespace}}/alpine/helm:3.9.0 \
+            template -f /apps/k8s/values/values.sit.yaml --set "version=${{ github.run_number }}" /apps/k8s/ --debug
 
       - name: "check uat k8s helm charts"
-        uses: coexservices/workflows/.github/actions/validate-k8-helm-chart.yml
-        with:
-          docker_namespace: ${{inputs.docker_namespace}}
-          env: uat
+        run: |
+          docker run --rm \
+            -v "$(pwd):/apps" \
+            -w /apps \
+            ${{inputs.docker_namespace}}/alpine/helm:3.9.0 \
+            template -f /apps/k8s/values/values.uat.yaml --set "version=${{ github.run_number }}" /apps/k8s/ --debug
 
       - name: "check prod k8s helm charts"
-        uses: coexservices/workflows/.github/actions/validate-k8-helm-chart.yml
-        with:
-          docker_namespace: ${{inputs.docker_namespace}}
-          env: prod
+        run: |
+          docker run --rm \
+            -v "$(pwd):/apps" \
+            -w /apps \
+            ${{inputs.docker_namespace}}/alpine/helm:3.9.0 \
+            template -f /apps/k8s/values/values.prod.yaml --set "version=${{ github.run_number }}" /apps/k8s/ --debug
