@@ -78,8 +78,7 @@ jobs:
 
     - name: "Build with Maven | version: ${{ github.run_number }}"
       run: |
-        echo Building version ${{ github.run_number }}
-        mvn versions:set -DnewVersion=${{ github.run_number }}
+        echo Building version ${{ github.run_number }}        
         mvn clean install -P uberjar --batch-mode
       env:
         GITHUB_ACTOR: ${{ secrets.github_repo_actor }}
