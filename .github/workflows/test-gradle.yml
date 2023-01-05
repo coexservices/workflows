@@ -23,7 +23,7 @@ jobs:
 
       - uses: snyk/actions/setup@master
       - name: 'Authenticate Snyk CLI'
-        run: snyk auth ${secrets.SNYK_AUTH_TOKEN}}
+        run: snyk auth ${{secrets.SNYK_AUTH_TOKEN}}
 
       - name: Set up JDK ${{ inputs.java_version }}
         uses: actions/setup-java@v3
