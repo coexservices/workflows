@@ -1,0 +1,37 @@
+name: Validate K8s
+
+on:
+  workflow_call:
+    inputs:
+      docker_namespace:
+        required: false
+        type: string
+        default: 'syd.ocir.io/coexservices01'
+
+jobs:
+  validate-k8s:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker Login
+        run: |
+          docker login ${{ inputs.docker_namespace }} -u ${{ secrets.ORACLE_CONTAINER_REGISTRY_DOCKER_USERNAME }} -p "${{ secrets.ORACLE_CONTAINER_REGISTRY_DOCKER_PASSWORD }}"
+
+      - name: "check sit k8s helm charts"
+        uses: ./.github/actions/validate-k8-helm-chart.yml
+        with:
+          docker_namespace: ${{inputs.docker_namespace}}
+          env: sit
+
+      - name: "check uat k8s helm charts"
+        uses: ./.github/actions/validate-k8-helm-chart.yml
+        with:
+          docker_namespace: ${{inputs.docker_namespace}}
+          env: uat
+
+      - name: "check prod k8s helm charts"
+        uses: ./.github/actions/validate-k8-helm-chart.yml
+        with:
+          docker_namespace: ${{inputs.docker_namespace}}
+          env: prod

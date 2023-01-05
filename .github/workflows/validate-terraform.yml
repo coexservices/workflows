@@ -1,0 +1,32 @@
+name: Validate PR
+
+on:
+  workflow_call:
+
+jobs:
+  validate-terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Project Step Calculator
+        run: |
+          echo "HAS_IAM_DIR=$( [ -d ./iam ] && echo true || echo false )" >> $GITHUB_ENV
+          echo "HAS_INFRA_DIR=$( [ -d ./infra ] && echo true || echo false )" >> $GITHUB_ENV
+
+      - name: "Validate iam terraform"
+        if: env.HAS_IAM_DIR == 'true'
+        run: |
+          cd iam
+          terraform init -backend=false
+          terraform validate
+          cd ../..
+
+      - name: "Validate infra terraform"
+        if: env.HAS_INFRA_DIR == 'true'
+        run: |
+          cd infra
+          terraform init -backend=false
+          terraform validate
+          cd ../..
+
