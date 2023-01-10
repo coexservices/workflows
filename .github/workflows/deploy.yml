@@ -161,7 +161,7 @@ jobs:
           path: iam/plan-iam.json
 
   deploy-terraform-plan-infra:
-    needs: [project-step-calculator]
+    needs: [project-step-calculator, deploy-terraform-apply-iam]
     if: needs.project-step-calculator.outputs.HAS_INFRA_DIR == 'true'
     runs-on: [self-hosted, nonprod]
     name: Deploy terraform Plan INFRA (${{ inputs.env }} -> ${{ inputs.ver }})
@@ -377,7 +377,7 @@ jobs:
             plan-iam.json
 
   deploy-terraform-apply-infra:
-    needs: [ project-step-calculator, deploy-terraform-plan-infra , deploy-terraform-apply-iam]
+    needs: [ project-step-calculator, deploy-terraform-apply-iam, deploy-terraform-plan-infra]
     if: needs.project-step-calculator.outputs.HAS_INFRA_DIR == 'true'
     runs-on: [ self-hosted, nonprod ]
     name: Deploy terraform Apply INFRA (${{ inputs.env }} -> ${{ inputs.ver }})
