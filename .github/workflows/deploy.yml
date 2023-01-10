@@ -225,7 +225,7 @@ jobs:
           output="./assume-infra-role-output.json"
           
           aws sts assume-role \
-            --role-arn "arn:aws:iam::${{ env.AWS_ACCOUNT_NUMBER }}:role/CloudIamDeployRole" \
+            --role-arn "arn:aws:iam::${{ env.AWS_ACCOUNT_NUMBER }}:role/${{ inputs.infra_role }}" \
             --role-session-name GithubSessionInfraDeploy_${{ inputs.app_name }} > $output
           
           AccessKeyId=$(cat $output | jq -r '.Credentials.AccessKeyId')
